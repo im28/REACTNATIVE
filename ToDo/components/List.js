@@ -15,7 +15,7 @@ import {
 	circleInactive,
 	circleActive,
 	deleteIconColor
-} from '../utils/Colors';
+} from './utils/Colors';
 
 const { width } = Dimensions.get('window');
 

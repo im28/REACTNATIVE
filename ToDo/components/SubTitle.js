@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-import { lighterWhite } from '../utils/Colors';
+import { lighterWhite } from './utils/Colors';
 
 const SubTitle = ({ subtitle }) => (
 	<Text style={[styles.titleText, { color: lighterWhite }]}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { lighterWhite } from '../utils/Colors';
+import { lighterWhite } from './utils/Colors';
 
 const Button = ({ deleteAllItems }) => (
 	<TouchableOpacity onPress={deleteAllItems}>
