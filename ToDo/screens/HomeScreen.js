@@ -24,7 +24,8 @@ export default class HomeScreen extends React.Component {
 		loadingItems: false,
 		allItems: {},
 		isCompleted: false,
-		searchTerm: ''
+		searchTerm: '',
+		search: false
 	};
 	searchUpdated(term) {
 		this.setState({ searchTerm: term })
@@ -125,8 +126,14 @@ export default class HomeScreen extends React.Component {
 	render(){
 		const { inputValue, loadingItems, allItems } = this.state;
 		let a =Object.values(allItems);
-		const filteredEmails = a.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
-		console.log(filteredEmails);
+		const filtered = a.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+		let q=[];
+		if (!this.state.search) {
+			q = Object.values(allItems);
+		}
+		else{
+			q = filtered;
+		}
 		
 		return (
 			<LinearGradient colors={primaryGradientArray} style={styles.container}>
@@ -136,9 +143,9 @@ export default class HomeScreen extends React.Component {
 			</View>
 
 			<SearchInput
-			onChangeText={(term) => { this.searchUpdated(term) }} 
-			style={styles.searchInput}
-			placeholder="Type a message to search"/>
+			onChangeText={(term) => { this.searchUpdated(term),this.setState({search:true}) }} 
+			style={{alignSelf:"center", marginTop:30, fontSize:28,color:"white",borderColor: '#CCC'}}
+			placeholder="Search Todos...."/>
 
 			<View style={styles.inputContainer}>
 				<SubTitle subtitle={"What's Next?"} />
@@ -155,10 +162,10 @@ export default class HomeScreen extends React.Component {
 						<Button deleteAllItems={this.deleteAllItems} />
 					</View>
 				</View>
-
+				
 				{loadingItems ? (
 					<ScrollView contentContainerStyle={styles.scrollableList}>
-						{Object.values(allItems)
+						{ q
 							.reverse()
 							.map(item => (
 								<List
@@ -184,7 +191,7 @@ HomeScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1
+		flex: 1,
 	},
 	centered: {
 		alignItems: 'center'
