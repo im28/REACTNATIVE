@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Header from '../components/Header';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-export default function SettingsScreen() {
+export default function SettingsScreen(props) {
   
   return (
     <LinearGradient colors={primaryGradientArray} style={styles.container}>
@@ -18,7 +18,7 @@ export default function SettingsScreen() {
           <Text style={{color:"white",fontSize:36,fontFamily:"space-mono"}}>USER</Text>
         </View>
         <View style={{    marginTop:"auto",marginBottom:100,textAlign:"center",alignItems: 'center',}}>
-          <TouchableOpacity style={styles.logout}onPress={()=>{}}>
+          <TouchableOpacity style={styles.logout}onPress={()=>{props.navigation.navigate('Login');}}>
             <FontAwesome5 name={"sign-out-alt"} style={{color:"white",fontSize:40,textAlign:"center"}}></FontAwesome5>
           </TouchableOpacity>
           <Text style={{color:"white",fontSize:16}}>logout</Text>

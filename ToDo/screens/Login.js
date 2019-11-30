@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Button,StatusBar,TouchableOpacity,TextInput } f
 import { primaryGradientArray } from '../components/utils/Colors';
 import { lighterWhite } from '../components/utils/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
+import { deleteIconColor } from 'expo-linear-gradient';
 import Header from '../components/Header';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
@@ -18,25 +19,24 @@ export default function Login(props) {
 			<Header title={"Login"} />
 		</View>
 		<TextInput
-            // value={this.state.password}
-            // onChangeText={(password) => this.setState({ password })}
+            value={Username}
+            onChangeText={(u) => setUsername(u)}
             placeholder={'Username'}
-            secureTextEntry={true}
             style={{...styles.input,}}
-            underlineColorAndroid={lighterWhite}
+            underlineColorAndroid={Incorrect? "red" :lighterWhite}
              autoCapitalize="none"
-               placeholderTextColor={lighterWhite}
+               placeholderTextColor={Incorrect? "red" :lighterWhite}
           />
         
 		<TextInput
-            // value={this.state.password}
-            // onChangeText={(password) => this.setState({ password })}
+            value={Password}
+            onChangeText={(u) => setPassword(u)}
             placeholder={'Password'}
             secureTextEntry={true}
             style={{...styles.input,marginBottom:50}}
-            underlineColorAndroid={lighterWhite}
+            underlineColorAndroid={Incorrect? "red" :lighterWhite}
              autoCapitalize="none"
-               placeholderTextColor={lighterWhite}
+               placeholderTextColor={Incorrect? "red" :lighterWhite}
           />
 		
 		  <Button color={primaryGradientArray[1]} title="Sign in!" onPress={signIn}/>
@@ -44,7 +44,12 @@ export default function Login(props) {
     
   )
   function signIn() {
-	props.navigation.navigate('Home');
+	if (Username ==="root" && Password === "root") {
+		props.navigation.navigate('Home');
+	}
+	else{
+		setIncorrect(true);
+	}
   }
   ;
 }
