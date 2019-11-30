@@ -121,7 +121,7 @@ export default class HomeScreen extends React.Component {
 			<LinearGradient colors={primaryGradientArray} style={styles.container}>
 			<StatusBar barStyle="light-content" />
 			<View style={styles.centered}>
-				<Header title={"TODO APP"} />
+				<Header title={"TODO"} />
 			</View>
 			<View style={styles.inputContainer}>
 				<SubTitle subtitle={"What's Next?"} />

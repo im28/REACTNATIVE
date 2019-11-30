@@ -1,7 +1,10 @@
 import React,{useState,useEffect} from 'react';
-import { Text, View, StyleSheet, Button,ScrollView } from 'react-native';
+import { Text, View, StyleSheet, Button,StatusBar } from 'react-native';
 import * as Permissions from 'expo-permissions';
+import { primaryGradientArray } from '../components/utils/Colors';
+import { LinearGradient } from 'expo-linear-gradient';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import Header from '../components/Header';
 
 
 export default function LinksScreen() {
@@ -20,39 +23,35 @@ export default function LinksScreen() {
     setscanned( true );
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
-  if (hasCameraPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
-  }
-  if (hasCameraPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
   return (
-    <View
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-        }}>
-        <BarCodeScanner
+    <LinearGradient colors={primaryGradientArray} style={styles.container}>
+        <StatusBar barStyle="light-content" />
+        <View style={styles.centered}>
+				  <Header title={"Scanner"} />
+			  </View>
+        {hasCameraPermission&&
+          <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
           style={StyleSheet.absoluteFillObject}
-        />
+          />
+        }
 
         {scanned && (
           <Button title={'Tap to Scan Again'} onPress={() => setscanned(false)} />
         )}
-      </View>
+      </LinearGradient>
   );
 }
 
 LinksScreen.navigationOptions = {
-  title: 'Links',
+  header: null,
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff',
   },
+  centered: {
+		alignItems: 'center'
+	},
 });
