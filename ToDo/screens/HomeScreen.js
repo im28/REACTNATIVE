@@ -11,21 +11,28 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import uuid from 'uuid/v1';
 import { primaryGradientArray } from '../components/utils/Colors';
+import SearchInput, { createFilter } from 'react-native-search-filter';
 import Header from '../components/Header';
 import SubTitle from '../components/SubTitle';
 import Input from '../components/Input';
 import List from '../components/List';
 import Button from '../components/Button';
+const KEYS_TO_FILTERS = ['text'];
 export default class HomeScreen extends React.Component {
 	state = {
 		inputValue: '',
 		loadingItems: false,
 		allItems: {},
-		isCompleted: false
+		isCompleted: false,
+		searchTerm: ''
 	};
+	searchUpdated(term) {
+		this.setState({ searchTerm: term })
+	}
 	componentDidMount = () => {
 		this.loadingItems();
 	};
+	
 	onDoneAddItem = () => {
 		const { inputValue } = this.state;
 		if (inputValue !== '') {
@@ -117,12 +124,22 @@ export default class HomeScreen extends React.Component {
 	};
 	render(){
 		const { inputValue, loadingItems, allItems } = this.state;
+		let a =Object.values(allItems);
+		const filteredEmails = a.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+		console.log(filteredEmails);
+		
 		return (
 			<LinearGradient colors={primaryGradientArray} style={styles.container}>
 			<StatusBar barStyle="light-content" />
 			<View style={styles.centered}>
 				<Header title={"TODO"} />
 			</View>
+
+			<SearchInput
+			onChangeText={(term) => { this.searchUpdated(term) }} 
+			style={styles.searchInput}
+			placeholder="Type a message to search"/>
+
 			<View style={styles.inputContainer}>
 				<SubTitle subtitle={"What's Next?"} />
 				<Input
