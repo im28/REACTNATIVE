@@ -1,12 +1,15 @@
 import React from 'react';
-import { Text, View, StyleSheet, Button,StatusBar,TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Button,StatusBar,TouchableOpacity,AsyncStorage } from 'react-native';
 import { primaryGradientArray } from '../components/utils/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import Header from '../components/Header';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export default function SettingsScreen(props) {
-  
+  async function logout() {
+    await AsyncStorage.removeItem('loggedin');
+    props.navigation.navigate('Login');
+  }
   return (
     <LinearGradient colors={primaryGradientArray} style={styles.container}>
         <StatusBar barStyle="light-content" />
@@ -18,7 +21,7 @@ export default function SettingsScreen(props) {
           <Text style={{color:"white",fontSize:36,fontFamily:"space-mono"}}>USER</Text>
         </View>
         <View style={{    marginTop:"auto",marginBottom:100,textAlign:"center",alignItems: 'center',}}>
-          <TouchableOpacity style={styles.logout}onPress={()=>{props.navigation.navigate('Login');}}>
+          <TouchableOpacity style={styles.logout}onPress={logout}>
             <FontAwesome5 name={"sign-out-alt"} style={{color:"white",fontSize:40,textAlign:"center"}}></FontAwesome5>
           </TouchableOpacity>
           <Text style={{color:"white",fontSize:16}}>logout</Text>

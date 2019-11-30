@@ -1,5 +1,5 @@
-import React,{useState} from 'react';
-import { Text, View, StyleSheet, Button,StatusBar,TouchableOpacity,TextInput } from 'react-native';
+import React,{useState,useEffect} from 'react';
+import { Text, View, StyleSheet, Button,StatusBar,TextInput,AsyncStorage } from 'react-native';
 import { primaryGradientArray } from '../components/utils/Colors';
 import { lighterWhite } from '../components/utils/Colors';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,8 +10,16 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 export default function Login(props) {
 	const [Username, setUsername] = useState("");
 	const [Password, setPassword] = useState("");
-	const [Incorrect, setIncorrect] = useState(false);
-  
+  const [Incorrect, setIncorrect] = useState(false);
+  async function loggin() {
+    const loggedin = await AsyncStorage.getItem('loggedin');
+    if (loggedin =='Ibrahim') {
+      props.navigation.navigate('Home');
+    }
+  }
+  useEffect(() => {
+    loggin();
+  }, [])
   return (
     <LinearGradient colors={primaryGradientArray} style={styles.container}>
 		<StatusBar barStyle="light-content" />
@@ -43,15 +51,16 @@ export default function Login(props) {
     </LinearGradient>
     
   )
-  function signIn() {
-	if (Username ==="root" && Password === "root") {
-		props.navigation.navigate('Home');
-	}
-	else{
-		setIncorrect(true);
-	}
-  }
-  ;
+    function signIn() {
+      if (Username ==="root" && Password === "root") {
+        props.navigation.navigate('Home');
+        AsyncStorage.setItem('loggedin', 'Ibrahim')
+      }
+      else{
+        setIncorrect(true);
+      }
+    }
+  
 }
 
 Login.navigationOptions = {
